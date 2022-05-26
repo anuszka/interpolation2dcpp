@@ -80,7 +80,7 @@ void interpolation2d_class_example()
             double yj = j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
-            printf("%f %f %f\n", xi, yj, zij);
+             printf("%f %f %f\n", xi, yj, zij);
         }
         printf("\n");
     }

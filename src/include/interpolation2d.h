@@ -17,12 +17,18 @@ private:
 
     double *data_grid_z;
 
+    void allocSpline(size_t data_grid_x_size_, size_t data_grid_y_size_);
+    void allocAccel();
+    void allocSplineAccel(size_t data_grid_x_size_, size_t data_grid_y_size_);
+    void initSpline(double *data_grid_z_);
+
 public:
     Interpolation2D();
     ~Interpolation2D();
     void setData();
-    void initSpline();
-    double getInterpolation(double, double);
+    void setGrid();
+
+    double getInterpolation(double xi_, double yj_);
 };
 
 #endif
