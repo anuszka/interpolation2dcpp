@@ -57,6 +57,8 @@ void Interpolation2D::setData()
 {
     setGrid();
     /* set z grid values */
+    // for(xi...)
+    //  for(yi...)
     gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);
     gsl_spline2d_set(spline, data_grid_z, 0, 1, 1.0);
     gsl_spline2d_set(spline, data_grid_z, 1, 1, 0.5);

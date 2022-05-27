@@ -11,9 +11,10 @@ int main()
     const std::string path = "./input/in.csv";
     const std::string column_name_x = "x";
     const std::string column_name_y = "y";
-    GridDataInterface grid_data(path, column_name_x, column_name_y);
-    grid_data.printColumnValues("x", grid_data.getXgrid());
-    grid_data.printColumnValues("y", grid_data.getYgrid());
+    const std::string column_name_z = "z";
+    GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
+    grid_data.printGridValues(column_name_x);
+    grid_data.printGridValues(column_name_y);
 }
 // int main(void)
 // {
