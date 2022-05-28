@@ -4,9 +4,9 @@
 // using z values of (0,1,0.5,1) going clockwise around the square.
 
 #include "include/interpolation2d_example.h"
-#include "include/griddatainterface.h"
+#include "include/parse_args.h"
 
-int main(void)
+int main(int argc, char **argv)
 // {
 //     const std::string path = "./input/in.csv";
 //     const std::string column_name_x = "x";
@@ -17,6 +17,29 @@ int main(void)
 //     grid_data.printGridValues(column_name_y);
 // }
 {
-    // interpolation2d_example();
-    interpolation2d_class_file_example();
+    int example;
+    parse_args("example", example, argc, argv);
+
+    switch (example)
+    {
+    case 1:
+        interpolation2d_example();
+        break;
+    case 2:
+        interpolation2d_class_example();
+        break;
+    case 3:
+        interpolation2d_class_file_example();
+        break;
+
+    default:
+        break;
+    }
+
+    // if (example == 1)
+    //     interpolation2d_example();
+    // else if (example == 2)
+    //     interpolation2d_class_example();
+    // else
+    //     interpolation2d_class_file_example();
 }

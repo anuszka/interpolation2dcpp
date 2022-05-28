@@ -43,6 +43,7 @@ public:
     double *getYgridAsArrayPtr(){return(y_grid.data());}
     double *getZvaluesAsArrayPtr(){return(z_values.data());}
     void printGridValues(const std::string column_name_);
+    void printZvalues();
 };
 
 #endif

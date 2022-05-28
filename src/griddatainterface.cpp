@@ -67,8 +67,8 @@ void GridDataInterface::setZvalues(const std::string column_name_z_)
     if (file_data_sorting_direction == FileDataSorting::along_x_column_first)
     { // z[i][j] = za[j*xsize+i]
 
-        for (int i = 0; i < x_grid_size; i++)
-            for (int j = 0; j < y_grid_size; j++)
+        for (int i = 0; i < (int) x_grid_size; i++)
+            for (int j = 0; j < (int) y_grid_size; j++)
             {
                 z = doc->GetCell<double>(column_name_z_, j * x_grid_size + i);
                 z_values.push_back(z);
@@ -76,8 +76,8 @@ void GridDataInterface::setZvalues(const std::string column_name_z_)
     }
     else
     {
-        for (int i = 0; i < x_grid_size; i++)
-            for (int j = 0; j < y_grid_size; j++)
+        for (int i = 0; i < (int) x_grid_size; i++)
+            for (int j = 0; j < (int) y_grid_size; j++)
             {
                 z = doc->GetCell<double>(column_name_z_, i * y_grid_size + j);
                 z_values.push_back(z);
@@ -112,5 +112,17 @@ void GridDataInterface::printGridValues(const std::string column_name_)
         for (const auto &value : grid)
             std::cout << value << "\n";
         std::cout << column_name_ << " grid size: " << grid.size() << "\n";
+    }
+}
+
+void GridDataInterface::printZvalues()
+{
+
+    if (file_data_sorting_correct)
+    {
+        std::cout << "z values, sorted:\n";
+        for (const auto &value : getZvalues())
+            std::cout << value << "\n";
+        std::cout << "z vector size: " << getZvalues().size() << "\n";
     }
 }

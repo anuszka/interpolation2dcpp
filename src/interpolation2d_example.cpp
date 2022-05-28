@@ -5,11 +5,16 @@
 #include <gsl/gsl_spline2d.h>
 #include "include/interpolation2d_example.h"
 #include "include/interpolation2d.h"
+#include "include/griddatainterface.h"
 
 void interpolation2d_example()
-{
+{// https://www.gnu.org/software/gsl/doc/html/interp.html#c.gsl_interp2d_eval
+// 2D Interpolation Example programs
+// my_gsl_interp2d_typehe following example performs bilinear interpolation on the unit square,
+// using z values of (0,1,0.5,1) going clockwise around the square.
+
     const gsl_interp2d_type *my_gsl_interp2d_type = gsl_interp2d_bilinear;
-    const size_t N = 100; /* number of points to interpolate */
+    const size_t N = 5; /* number of points to interpolate */
     // const double data_grid_x[] = {0.0, 1.0}; /* define unit square */
     // const double data_grid_y[] = {0.0, 1.0};
 
@@ -53,7 +58,7 @@ void interpolation2d_example()
         printf("\n");
     }
 
-    printf("data_grid_x_size = %d, data_grid_y_size =  %d\n", (int)data_grid_x_size, (int)data_grid_y_size);
+    // printf("data_grid_x_size = %d, data_grid_y_size =  %d\n", (int)data_grid_x_size, (int)data_grid_y_size);
     gsl_spline2d_free(spline);
     gsl_interp_accel_free(xacc);
     gsl_interp_accel_free(yacc);
@@ -65,7 +70,7 @@ void interpolation2d_class_example()
     Interpolation2D myinterp;
     myinterp.setData();
 
-    const size_t N = 100; /* number of points to interpolate */
+    const size_t N = 5; /* number of points to interpolate */
     size_t i, j;
 
     for (i = 0; i < N; ++i)
@@ -92,6 +97,7 @@ void interpolation2d_class_file_example()
     GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
     // grid_data.printGridValues(column_name_x);
     // grid_data.printGridValues(column_name_y);
+    // grid_data.printZvalues();
 
     Interpolation2D myinterp;
     myinterp.setData(
@@ -101,7 +107,7 @@ void interpolation2d_class_file_example()
         grid_data.getYgridSize(),
         grid_data.getZvaluesAsArrayPtr());
 
-    const size_t N = 100; /* number of points to interpolate */
+    const size_t N = 5; /* number of points to interpolate */
     size_t i, j;
 
     for (i = 0; i < N; ++i)
@@ -113,6 +119,7 @@ void interpolation2d_class_file_example()
             double yj = j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
+            // printf("%f %f %f\n", xi*grid_data.getXgrid().back(), yj*grid_data.getYgrid().back(), zij);
             printf("%f %f %f\n", xi, yj, zij);
         }
         printf("\n");

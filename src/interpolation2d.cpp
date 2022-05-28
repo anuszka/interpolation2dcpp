@@ -2,6 +2,7 @@
 #include <gsl/gsl_interp2d.h>
 #include <gsl/gsl_spline2d.h>
 #include <cstdio>
+#include <iostream>
 #include "include/interpolation2d.h"
 
 Interpolation2D::Interpolation2D()
@@ -57,11 +58,12 @@ void Interpolation2D::setGrid(
     double *data_grid_x_,
     size_t data_grid_x_size_,
     double *data_grid_y_,
-    size_t data_grid_y_size_) : data_grid_x(data_grid_x_),
-                                data_grid_x_size(data_grid_x_size_),
-                                data_grid_y(data_grid_y_),
-                                data_grid_y_size(data_grid_y_size_)
+    size_t data_grid_y_size_)
 {
+    data_grid_x = data_grid_x_;
+    data_grid_x_size = data_grid_x_size_;
+    data_grid_y = data_grid_y_;
+    data_grid_y_size = data_grid_y_size_;
     data_grid_z = new double[data_grid_x_size * data_grid_y_size];
     return (allocSplineAccel(data_grid_x_size, data_grid_y_size));
 }
@@ -91,12 +93,15 @@ void Interpolation2D::setData(
     /* set z grid values */
     for (int xi = 0; xi < (int)data_grid_x_size; xi++)
         for (int yi = 0; yi < (int)data_grid_y_size; yi++)
+        {
             gsl_spline2d_set(
                 spline,
                 data_grid_z,
                 xi,
                 yi,
                 data_values_z_[data_grid_x_size * xi + yi]);
+            // std::cout<< data_values_z_[data_grid_x_size * xi + yi] << "\n";
+        }
     // gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);
     // gsl_spline2d_set(spline, data_grid_z, 0, 1, 1.0);
     // gsl_spline2d_set(spline, data_grid_z, 1, 0, 1.0);
