@@ -36,6 +36,11 @@ public:
                  size_t data_grid_x_size_,
                  double *data_grid_y_,
                  size_t data_grid_y_size_);
+
+
+    double *getGridX(){return(data_grid_x);}
+    double *getGridY(){return(data_grid_y);}
+
     double getInterpolation(double xi_, double yj_);
 };
 

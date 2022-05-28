@@ -47,8 +47,8 @@ void Interpolation2D::setGrid()
     size_t M = 2;
     data_grid_x_size = M;
     data_grid_y_size = M;
-    data_grid_x = new double[data_grid_x_size]{0.0, 1.0};
-    data_grid_y = new double[data_grid_y_size]{0.0, 1.0};
+    data_grid_x = new double[data_grid_x_size]{0.0, 10.0};
+    data_grid_y = new double[data_grid_y_size]{0.0, 10.0};
     data_grid_z = new double[data_grid_x_size * data_grid_y_size];
 
     return (allocSplineAccel(data_grid_x_size, data_grid_y_size));

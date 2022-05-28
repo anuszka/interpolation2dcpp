@@ -20,8 +20,8 @@ void interpolation2d_example()
 
     const size_t M = 2;
 
-    double *data_grid_x = new double[M]{0.0, 1.0};
-    double *data_grid_y = new double[M]{0.0, 1.0};
+    double *data_grid_x = new double[M]{0.0, 10.0};
+    double *data_grid_y = new double[M]{0.0, 10.0};
 
     size_t data_grid_x_size = M; /* x grid points */
     size_t data_grid_y_size = M; /* y grid points */
@@ -46,16 +46,16 @@ void interpolation2d_example()
     /* interpolate N values in x and y and print out grid for plotting */
     for (i = 0; i < N; ++i)
     {
-        double xi = i / (N - 1.0);
+        double xi = data_grid_x[1]*i / (N - 1.0);
 
         for (j = 0; j < N; ++j)
         {
-            double yj = j / (N - 1.0);
+            double yj = data_grid_y[1]*j / (N - 1.0);
             double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
 
-            printf("%f %f %f\n", xi, yj, zij);
+            printf("%f,%f,%f\n", xi, yj, zij);
         }
-        printf("\n");
+        // printf("\n");
     }
 
     // printf("data_grid_x_size = %d, data_grid_y_size =  %d\n", (int)data_grid_x_size, (int)data_grid_y_size);
@@ -75,22 +75,22 @@ void interpolation2d_class_example()
 
     for (i = 0; i < N; ++i)
     {
-        double xi = i / (N - 1.0);
+        double xi = (myinterp.getGridX())[1]*i / (N - 1.0);
 
         for (j = 0; j < N; ++j)
         {
-            double yj = j / (N - 1.0);
+            double yj = (myinterp.getGridX())[1]*j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
-            printf("%f %f %f\n", xi, yj, zij);
+            printf("%f,%f,%f\n", xi, yj, zij);
         }
-        printf("\n");
+        // printf("\n");
     }
 }
 
 void interpolation2d_class_file_example()
 {
-    const std::string path = "./input/in.csv";
+    const std::string path = "./input/in3.csv";
     const std::string column_name_x = "x";
     const std::string column_name_y = "y";
     const std::string column_name_z = "z";
@@ -112,16 +112,16 @@ void interpolation2d_class_file_example()
 
     for (i = 0; i < N; ++i)
     {
-        double xi = i / (N - 1.0);
+        double xi = grid_data.getXgrid().back()*i / (N - 1.0);
 
         for (j = 0; j < N; ++j)
         {
-            double yj = j / (N - 1.0);
+            double yj = grid_data.getYgrid().back()*j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
             // printf("%f %f %f\n", xi*grid_data.getXgrid().back(), yj*grid_data.getYgrid().back(), zij);
-            printf("%f %f %f\n", xi, yj, zij);
+            printf("%f,%f,%f\n", xi, yj, zij);
         }
-        printf("\n");
+        // printf("\n");
     }
 }
