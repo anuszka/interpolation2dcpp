@@ -26,8 +26,16 @@ public:
     Interpolation2D();
     ~Interpolation2D();
     void setData();
+    void setData(double *data_grid_x_,
+                 size_t data_grid_x_size_,
+                 double *data_grid_y_,
+                 size_t data_grid_y_size_,
+                 double *data_values_z_);
     void setGrid();
-
+    void setGrid(double *data_grid_x_,
+                 size_t data_grid_x_size_,
+                 double *data_grid_y_,
+                 size_t data_grid_y_size_);
     double getInterpolation(double xi_, double yj_);
 };
 

@@ -6,20 +6,17 @@
 #include "include/interpolation2d_example.h"
 #include "include/griddatainterface.h"
 
-int main()
-{
-    const std::string path = "./input/in.csv";
-    const std::string column_name_x = "x";
-    const std::string column_name_y = "y";
-    const std::string column_name_z = "z";
-    GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
-    grid_data.printGridValues(column_name_x);
-    grid_data.printGridValues(column_name_y);
-}
-// int main(void)
+int main(void)
 // {
-//     // interpolation2d_example();
-
-//     interpolation2d_class_example();
-
+//     const std::string path = "./input/in.csv";
+//     const std::string column_name_x = "x";
+//     const std::string column_name_y = "y";
+//     const std::string column_name_z = "z";
+//     GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
+//     grid_data.printGridValues(column_name_x);
+//     grid_data.printGridValues(column_name_y);
 // }
+{
+    // interpolation2d_example();
+    interpolation2d_class_file_example();
+}

@@ -16,8 +16,8 @@ private:
     std::vector<double> y_grid;
     std::vector<double> z_values; // z[i][j] = za[j*xsize+i]
     std::vector<double> collect_values(std::vector<double> v);
-    double x_grid_size;
-    double y_grid_size;
+    size_t x_grid_size;
+    size_t y_grid_size;
     void setXgrid(const std::string column_name_x_);
     void setYgrid(const std::string column_name_y_);
     void setZvalues(const std::string column_name_z_);
@@ -37,8 +37,8 @@ public:
     std::vector<double> getXgrid() { return (x_grid); }
     std::vector<double> getYgrid() { return (y_grid); }
     std::vector<double> getZvalues() { return (z_values); }
-    double getXgridSize(){return(x_grid_size);}
-    double getYgridSize(){return(y_grid_size);}
+    size_t getXgridSize(){return(x_grid_size);}
+    size_t getYgridSize(){return(y_grid_size);}
     double *getXgridAsArrayPtr(){return(x_grid.data());}
     double *getYgridAsArrayPtr(){return(y_grid.data());}
     double *getZvaluesAsArrayPtr(){return(z_values.data());}

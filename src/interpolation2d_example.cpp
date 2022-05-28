@@ -60,9 +60,6 @@ void interpolation2d_example()
     free(data_grid_z);
 }
 
-
-
-
 void interpolation2d_class_example()
 {
     Interpolation2D myinterp;
@@ -80,7 +77,43 @@ void interpolation2d_class_example()
             double yj = j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
-             printf("%f %f %f\n", xi, yj, zij);
+            printf("%f %f %f\n", xi, yj, zij);
+        }
+        printf("\n");
+    }
+}
+
+void interpolation2d_class_file_example()
+{
+    const std::string path = "./input/in.csv";
+    const std::string column_name_x = "x";
+    const std::string column_name_y = "y";
+    const std::string column_name_z = "z";
+    GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
+    // grid_data.printGridValues(column_name_x);
+    // grid_data.printGridValues(column_name_y);
+
+    Interpolation2D myinterp;
+    myinterp.setData(
+        grid_data.getXgridAsArrayPtr(),
+        grid_data.getXgridSize(),
+        grid_data.getYgridAsArrayPtr(),
+        grid_data.getYgridSize(),
+        grid_data.getZvaluesAsArrayPtr());
+
+    const size_t N = 100; /* number of points to interpolate */
+    size_t i, j;
+
+    for (i = 0; i < N; ++i)
+    {
+        double xi = i / (N - 1.0);
+
+        for (j = 0; j < N; ++j)
+        {
+            double yj = j / (N - 1.0);
+            double zij = myinterp.getInterpolation(xi, yj);
+
+            printf("%f %f %f\n", xi, yj, zij);
         }
         printf("\n");
     }

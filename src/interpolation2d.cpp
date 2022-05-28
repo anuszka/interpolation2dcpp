@@ -49,8 +49,21 @@ void Interpolation2D::setGrid()
     data_grid_x = new double[data_grid_x_size]{0.0, 1.0};
     data_grid_y = new double[data_grid_y_size]{0.0, 1.0};
     data_grid_z = new double[data_grid_x_size * data_grid_y_size];
-    
-    return(allocSplineAccel(data_grid_x_size, data_grid_y_size));
+
+    return (allocSplineAccel(data_grid_x_size, data_grid_y_size));
+}
+
+void Interpolation2D::setGrid(
+    double *data_grid_x_,
+    size_t data_grid_x_size_,
+    double *data_grid_y_,
+    size_t data_grid_y_size_) : data_grid_x(data_grid_x_),
+                                data_grid_x_size(data_grid_x_size_),
+                                data_grid_y(data_grid_y_),
+                                data_grid_y_size(data_grid_y_size_)
+{
+    data_grid_z = new double[data_grid_x_size * data_grid_y_size];
+    return (allocSplineAccel(data_grid_x_size, data_grid_y_size));
 }
 
 void Interpolation2D::setData()
@@ -64,7 +77,31 @@ void Interpolation2D::setData()
     gsl_spline2d_set(spline, data_grid_z, 1, 1, 0.5);
     gsl_spline2d_set(spline, data_grid_z, 1, 0, 1.0);
 
-    return(initSpline(data_grid_z));
+    return (initSpline(data_grid_z));
+}
+
+void Interpolation2D::setData(
+    double *data_grid_x_,
+    size_t data_grid_x_size_,
+    double *data_grid_y_,
+    size_t data_grid_y_size_,
+    double *data_values_z_)
+{
+    setGrid(data_grid_x_, data_grid_x_size_, data_grid_y_, data_grid_y_size_);
+    /* set z grid values */
+    for (int xi = 0; xi < (int)data_grid_x_size; xi++)
+        for (int yi = 0; yi < (int)data_grid_y_size; yi++)
+            gsl_spline2d_set(
+                spline,
+                data_grid_z,
+                xi,
+                yi,
+                data_values_z_[data_grid_x_size * xi + yi]);
+    // gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);
+    // gsl_spline2d_set(spline, data_grid_z, 0, 1, 1.0);
+    // gsl_spline2d_set(spline, data_grid_z, 1, 0, 1.0);
+    // gsl_spline2d_set(spline, data_grid_z, 1, 1, 0.5);
+    return (initSpline(data_grid_z));
 }
 
 double Interpolation2D::getInterpolation(double xi_, double yj_)
