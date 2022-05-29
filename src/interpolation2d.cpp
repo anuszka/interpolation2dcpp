@@ -99,7 +99,7 @@ void Interpolation2D::setData(
                 data_grid_z,
                 xi,
                 yi,
-                data_values_z_[data_grid_x_size * xi + yi]);
+                data_values_z_[(int)data_grid_y_size * xi + yi]);
             // std::cout<< data_values_z_[data_grid_x_size * xi + yi] << "\n";
         }
     // gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);

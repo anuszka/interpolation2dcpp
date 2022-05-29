@@ -107,7 +107,7 @@ void interpolation2d_class_file_example()
         grid_data.getYgridSize(),
         grid_data.getZvaluesAsArrayPtr());
 
-    const size_t N = 5; /* number of points to interpolate */
+    const size_t N = 13; /* number of points to interpolate */
     size_t i, j;
 
     for (i = 0; i < N; ++i)
