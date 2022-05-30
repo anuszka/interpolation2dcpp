@@ -1,4 +1,4 @@
-#include "rapidcsv.h"
+#include "rapidcsv/rapidcsv.h"
 #include <vector>
 
 #ifndef GRIDDATAINTERFACE

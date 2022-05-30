@@ -1,5 +1,5 @@
-#include "include/griddatainterface.h"
 #include <iostream>
+#include "include/griddatainterface.h"
 
 GridDataInterface::GridDataInterface(
     const std::string &pPath,
