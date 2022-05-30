@@ -22,6 +22,9 @@ void interpolation2d_example()
 
     const size_t M = 2;
 
+    // Note that I changed the original example from GSL documentation: 
+    // Here, the grid point values are 0. and 10. to make it clear that
+    // the int numbers 0 and 1 in gsl_spline2d_set() are grid point numbering and not grid point values.
     double *data_grid_x = new double[M]{0.0, 10.0};
     double *data_grid_y = new double[M]{0.0, 10.0};
 
@@ -36,6 +39,7 @@ void interpolation2d_example()
     size_t i, j;
 
     /* set z grid values */
+    // The int numbers 0 and 1 in gsl_spline2d_set() are grid point numbering and not grid point values.
     gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);
     gsl_spline2d_set(spline, data_grid_z, 0, 1, 1.0);
     gsl_spline2d_set(spline, data_grid_z, 1, 1, 0.5);
@@ -47,6 +51,8 @@ void interpolation2d_example()
     /* interpolate N values in x and y and print out grid for plotting */
     for (i = 0; i < N; ++i)
     {
+        // Differently than in the original example in GSL documentation,
+        // I rescaled the interpolation point positions according to the grid limits (which are here data_grid_x[1] and data_grid_y[1]).
         double xi = data_grid_x[1] * i / (N - 1.0);
 
         for (j = 0; j < N; ++j)
@@ -54,7 +60,7 @@ void interpolation2d_example()
             double yj = data_grid_y[1] * j / (N - 1.0);
             double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
 
-            printf("%f,%f,%f\n", xi, yj, zij);
+            printf("%f,%f,%f\n", xi, yj, zij); // I format the output for CSV file
         }
         // printf("\n");
     }
@@ -67,7 +73,7 @@ void interpolation2d_example()
 
 void interpolation2d_class_file_example()
 {
-    const std::string path = "./input/in3.csv";
+    const std::string path = "./input/in.csv";
     const std::string column_name_x = "x";
     const std::string column_name_y = "y";
     const std::string column_name_z = "z";
