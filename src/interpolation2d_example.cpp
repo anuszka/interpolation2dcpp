@@ -8,10 +8,12 @@
 #include "include/griddatainterface.h"
 
 void interpolation2d_example()
-{// https://www.gnu.org/software/gsl/doc/html/interp.html#c.gsl_interp2d_eval
-// 2D Interpolation Example programs
-// my_gsl_interp2d_typehe following example performs bilinear interpolation on the unit square,
-// using z values of (0,1,0.5,1) going clockwise around the square.
+{
+    // From:
+    // https://www.gnu.org/software/gsl/doc/html/interp.html#c.gsl_interp2d_eval
+    // 2D Interpolation Example programs
+    // the following example performs bilinear interpolation on the unit square,
+    // using z values of (0,1,0.5,1) going clockwise around the square.
 
     const gsl_interp2d_type *my_gsl_interp2d_type = gsl_interp2d_bilinear;
     const size_t N = 5; /* number of points to interpolate */
@@ -27,7 +29,6 @@ void interpolation2d_example()
     size_t data_grid_y_size = M; /* y grid points */
 
     double *data_grid_z = (double *)malloc(data_grid_x_size * data_grid_y_size * sizeof(double));
-    // double *data_grid_z = (double *)malloc(data_grid_x_size * data_grid_y_size * sizeof(double));
 
     gsl_spline2d *spline = gsl_spline2d_alloc(my_gsl_interp2d_type, data_grid_x_size, data_grid_y_size);
     gsl_interp_accel *xacc = gsl_interp_accel_alloc();
@@ -46,11 +47,11 @@ void interpolation2d_example()
     /* interpolate N values in x and y and print out grid for plotting */
     for (i = 0; i < N; ++i)
     {
-        double xi = data_grid_x[1]*i / (N - 1.0);
+        double xi = data_grid_x[1] * i / (N - 1.0);
 
         for (j = 0; j < N; ++j)
         {
-            double yj = data_grid_y[1]*j / (N - 1.0);
+            double yj = data_grid_y[1] * j / (N - 1.0);
             double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
 
             printf("%f,%f,%f\n", xi, yj, zij);
@@ -58,34 +59,10 @@ void interpolation2d_example()
         // printf("\n");
     }
 
-    // printf("data_grid_x_size = %d, data_grid_y_size =  %d\n", (int)data_grid_x_size, (int)data_grid_y_size);
     gsl_spline2d_free(spline);
     gsl_interp_accel_free(xacc);
     gsl_interp_accel_free(yacc);
     free(data_grid_z);
-}
-
-void interpolation2d_class_example()
-{
-    Interpolation2D myinterp;
-    myinterp.setData();
-
-    const size_t N = 5; /* number of points to interpolate */
-    size_t i, j;
-
-    for (i = 0; i < N; ++i)
-    {
-        double xi = (myinterp.getGridX())[1]*i / (N - 1.0);
-
-        for (j = 0; j < N; ++j)
-        {
-            double yj = (myinterp.getGridX())[1]*j / (N - 1.0);
-            double zij = myinterp.getInterpolation(xi, yj);
-
-            printf("%f,%f,%f\n", xi, yj, zij);
-        }
-        // printf("\n");
-    }
 }
 
 void interpolation2d_class_file_example()
@@ -95,33 +72,23 @@ void interpolation2d_class_file_example()
     const std::string column_name_y = "y";
     const std::string column_name_z = "z";
     GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
-    // grid_data.printGridValues(column_name_x);
-    // grid_data.printGridValues(column_name_y);
-    // grid_data.printZvalues();
 
     Interpolation2D myinterp;
-    myinterp.setData(
-        grid_data.getXgridAsArrayPtr(),
-        grid_data.getXgridSize(),
-        grid_data.getYgridAsArrayPtr(),
-        grid_data.getYgridSize(),
-        grid_data.getZvaluesAsArrayPtr());
+    myinterp.setData(grid_data);
 
     const size_t N = 13; /* number of points to interpolate */
     size_t i, j;
 
     for (i = 0; i < N; ++i)
     {
-        double xi = grid_data.getXgrid().back()*i / (N - 1.0);
+        double xi = grid_data.getXgrid().back() * i / (N - 1.0);
 
         for (j = 0; j < N; ++j)
         {
-            double yj = grid_data.getYgrid().back()*j / (N - 1.0);
+            double yj = grid_data.getYgrid().back() * j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
-            // printf("%f %f %f\n", xi*grid_data.getXgrid().back(), yj*grid_data.getYgrid().back(), zij);
             printf("%f,%f,%f\n", xi, yj, zij);
         }
-        // printf("\n");
     }
 }

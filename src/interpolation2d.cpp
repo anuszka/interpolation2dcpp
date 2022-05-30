@@ -37,22 +37,23 @@ void Interpolation2D::allocSplineAccel(size_t data_grid_x_size_, size_t data_gri
     allocAccel();
 }
 
-void Interpolation2D::initSpline(double *data_grid_z_)
+void Interpolation2D::initSpline(
+    double *data_grid_x_,
+    double *data_grid_y_,
+    double *data_grid_z_,
+    size_t data_grid_x_size_,
+    size_t data_grid_y_size_)
 {
-    gsl_spline2d_init(spline, data_grid_x, data_grid_y, data_grid_z_, data_grid_x_size, data_grid_y_size);
+    gsl_spline2d_init(
+        spline,
+        data_grid_x_,
+        data_grid_y_,
+        data_grid_z_,
+        data_grid_x_size_,
+        data_grid_y_size_);
 }
 
-void Interpolation2D::setGrid()
-{
-    size_t M = 2;
-    data_grid_x_size = M;
-    data_grid_y_size = M;
-    data_grid_x = new double[data_grid_x_size]{0.0, 10.0};
-    data_grid_y = new double[data_grid_y_size]{0.0, 10.0};
-    data_grid_z = new double[data_grid_x_size * data_grid_y_size];
 
-    return (allocSplineAccel(data_grid_x_size, data_grid_y_size));
-}
 
 void Interpolation2D::setGrid(
     double *data_grid_x_,
@@ -68,18 +69,16 @@ void Interpolation2D::setGrid(
     return (allocSplineAccel(data_grid_x_size, data_grid_y_size));
 }
 
-void Interpolation2D::setData()
-{
-    setGrid();
-    /* set z grid values */
-    // for(xi...)
-    //  for(yi...)
-    gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);
-    gsl_spline2d_set(spline, data_grid_z, 0, 1, 1.0);
-    gsl_spline2d_set(spline, data_grid_z, 1, 1, 0.5);
-    gsl_spline2d_set(spline, data_grid_z, 1, 0, 1.0);
 
-    return (initSpline(data_grid_z));
+
+void Interpolation2D::setData(GridDataInterface grid_data_)
+{
+    setData(
+        grid_data_.getXgridAsArrayPtr(),
+        grid_data_.getXgridSize(),
+        grid_data_.getYgridAsArrayPtr(),
+        grid_data_.getYgridSize(),
+        grid_data_.getZvaluesAsArrayPtr());
 }
 
 void Interpolation2D::setData(
@@ -100,13 +99,12 @@ void Interpolation2D::setData(
                 xi,
                 yi,
                 data_values_z_[(int)data_grid_y_size * xi + yi]);
-            // std::cout<< data_values_z_[data_grid_x_size * xi + yi] << "\n";
         }
-    // gsl_spline2d_set(spline, data_grid_z, 0, 0, 0.0);
-    // gsl_spline2d_set(spline, data_grid_z, 0, 1, 1.0);
-    // gsl_spline2d_set(spline, data_grid_z, 1, 0, 1.0);
-    // gsl_spline2d_set(spline, data_grid_z, 1, 1, 0.5);
-    return (initSpline(data_grid_z));
+    return (initSpline(data_grid_x,
+                       data_grid_y,
+                       data_grid_z,
+                       data_grid_x_size,
+                       data_grid_y_size));
 }
 
 double Interpolation2D::getInterpolation(double xi_, double yj_)

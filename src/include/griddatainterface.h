@@ -14,8 +14,8 @@ private:
     const std::string column_name_z;
     std::vector<double> x_grid;
     std::vector<double> y_grid;
-    std::vector<double> z_values; // z[i][j] = za[j*xsize+i]
-    std::vector<double> collect_values(std::vector<double> v);
+    std::vector<double> z_values; 
+    std::vector<double> collect_nonrepeating_values(std::vector<double> v);
     size_t x_grid_size;
     size_t y_grid_size;
     void setXgrid(const std::string column_name_x_);

@@ -21,12 +21,15 @@ GridDataInterface::GridDataInterface(
 
 void GridDataInterface::setDoc(const std::string path_)
 {
+    // File with 3 columns (x, y, z) and arbitrary column labels
     doc = new rapidcsv::Document(path_, rapidcsv::LabelParams(0, -1));
 }
 
 bool GridDataInterface::fileDataSortingCorrect()
 {
-    // Checks first two lines for now
+    // This function checks only first two lines and columns for now.
+    // This is to determine the sorting direction.
+
     double x0 = doc->GetCell<double>(column_name_x, 0);
     double x1 = doc->GetCell<double>(column_name_x, 1);
     double y0 = doc->GetCell<double>(column_name_y, 0);
@@ -34,12 +37,10 @@ bool GridDataInterface::fileDataSortingCorrect()
     if ((x0 == x1) && (y0 < y1))
     {
         file_data_sorting_direction = FileDataSorting::along_y_column_first;
-        // std::cout << "File data go along y column first\n";
     }
     else if ((x0 < x1) && (y0 == y1))
     {
         file_data_sorting_direction = FileDataSorting::along_x_column_first;
-        // std::cout<< "File data go along x column first\n";
     }
     else
     {
@@ -51,13 +52,13 @@ bool GridDataInterface::fileDataSortingCorrect()
 
 void GridDataInterface::setXgrid(const std::string column_name_x_)
 {
-    x_grid = collect_values(doc->GetColumn<double>(column_name_x_));
+    x_grid = collect_nonrepeating_values(doc->GetColumn<double>(column_name_x_));
     x_grid_size = x_grid.size();
 }
 
 void GridDataInterface::setYgrid(const std::string column_name_y_)
 {
-    y_grid = collect_values(doc->GetColumn<double>(column_name_y_));
+    y_grid = collect_nonrepeating_values(doc->GetColumn<double>(column_name_y_));
     y_grid_size = y_grid.size();
 }
 
@@ -65,7 +66,7 @@ void GridDataInterface::setZvalues(const std::string column_name_z_)
 {
     double z;
     if (file_data_sorting_direction == FileDataSorting::along_x_column_first)
-    { // z[i][j] = za[j*xsize+i]
+    {
 
         for (int i = 0; i < (int) x_grid_size; i++)
             for (int j = 0; j < (int) y_grid_size; j++)
@@ -85,7 +86,7 @@ void GridDataInterface::setZvalues(const std::string column_name_z_)
     }
 }
 
-std::vector<double> GridDataInterface::collect_values(std::vector<double> v)
+std::vector<double> GridDataInterface::collect_nonrepeating_values(std::vector<double> v)
 {
     std::vector<double> output;
     double prev_val = v[0];
@@ -108,7 +109,7 @@ void GridDataInterface::printGridValues(const std::string column_name_)
     {
         std::vector<double> grid;
         grid = (column_name_ == column_name_x) ? getXgrid() : getYgrid();
-        std::cout << column_name_ << " column values:\n";
+        std::cout << column_name_ << " grid values:\n";
         for (const auto &value : grid)
             std::cout << value << "\n";
         std::cout << column_name_ << " grid size: " << grid.size() << "\n";

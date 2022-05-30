@@ -1,3 +1,5 @@
+#include "griddatainterface.h"
+
 #ifndef INTERPOLATION2D
 #define INTERPOLATION2D
 
@@ -20,26 +22,28 @@ private:
     void allocSpline(size_t data_grid_x_size_, size_t data_grid_y_size_);
     void allocAccel();
     void allocSplineAccel(size_t data_grid_x_size_, size_t data_grid_y_size_);
-    void initSpline(double *data_grid_z_);
-
-public:
-    Interpolation2D();
-    ~Interpolation2D();
-    void setData();
-    void setData(double *data_grid_x_,
-                 size_t data_grid_x_size_,
-                 double *data_grid_y_,
-                 size_t data_grid_y_size_,
-                 double *data_values_z_);
-    void setGrid();
+    void initSpline(
+        double *data_grid_x_,
+        double *data_grid_y_,
+        double *data_grid_z_,
+        size_t data_grid_x_size_,
+        size_t data_grid_y_size_);
     void setGrid(double *data_grid_x_,
                  size_t data_grid_x_size_,
                  double *data_grid_y_,
                  size_t data_grid_y_size_);
 
-
-    double *getGridX(){return(data_grid_x);}
-    double *getGridY(){return(data_grid_y);}
+public:
+    Interpolation2D();
+    ~Interpolation2D();
+    void setData(double *data_grid_x_,
+                 size_t data_grid_x_size_,
+                 double *data_grid_y_,
+                 size_t data_grid_y_size_,
+                 double *data_values_z_);
+    void setData(GridDataInterface grid_data_);
+    double *getGridX() { return (data_grid_x); }
+    double *getGridY() { return (data_grid_y); }
 
     double getInterpolation(double xi_, double yj_);
 };
