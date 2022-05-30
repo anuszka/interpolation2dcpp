@@ -59,7 +59,7 @@ List of my modifications:
 
         double *data_grid_z = (double *)malloc(data_grid_x_size * data_grid_y_size * sizeof(double));
         
-2. The grid point values are 0. and 10. to make it clear that the `int` numbers 0 and 1 in `gsl_spline2d_set()` are grid point numbering and not grid point values.
+2. The grid point values are 0. and 10. to make it clear that the `int` numbers 0 and 1 in `gsl_spline2d_set()` are grid point numbering and not grid point coordinates.
 
 3. I rescaled the interpolation point positions according to the grid limits (which are here `data_grid_x[1]` and `data_grid_y[1]`).
 
