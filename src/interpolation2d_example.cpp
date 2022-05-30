@@ -77,15 +77,17 @@ void interpolation2d_class_file_example()
     myinterp.setData(grid_data);
 
     const size_t N = 13; /* number of points to interpolate */
-    size_t i, j;
 
-    for (i = 0; i < N; ++i)
+    double xmax = grid_data.getXgrid().back();
+    double ymax = grid_data.getYgrid().back();
+
+    for (size_t i = 0; i < N; ++i)
     {
-        double xi = grid_data.getXgrid().back() * i / (N - 1.0);
+        double xi = xmax * i / (N - 1.0);
 
-        for (j = 0; j < N; ++j)
+        for (size_t j = 0; j < N; ++j)
         {
-            double yj = grid_data.getYgrid().back() * j / (N - 1.0);
+            double yj = ymax * j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
 
             printf("%f,%f,%f\n", xi, yj, zij);
