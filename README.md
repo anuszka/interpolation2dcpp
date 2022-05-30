@@ -27,6 +27,8 @@ Get the interpolated z value for (x,y) coordinates:
 
 ## Examples
 
+`interpolation2d_example.cpp` (with `interpolation2d_example.h`) contains examples for 2D bilinear interpolation. 
+
 ### Example usage of my C++ interface
 
     ./interpolation2dcpp.run --example=1 > ./output/out1.csv
@@ -44,8 +46,6 @@ Fig. 1: Output from the Example 1, plotted with gnuplot:
     set datafile separator ","; set xlabel "x"; set ylabel "y"; set zlabel "z"; splot "./input/in.csv" u 1:2:3 lt 7, "./output/out1.csv" u 1:2:3
 
 ### Original C example for comparison
-
-`interpolation2d_example.cpp` (with `interpolation2d_example.h`) contains examples for 2D bilinear interpolation. 
 
 Usage:
 
