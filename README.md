@@ -63,7 +63,11 @@ List of my modifications:
 
 3. I rescaled the interpolation point positions according to the grid limits (which are here `data_grid_x[1]` and `data_grid_y[1]`).
 
+<<<<<<< HEAD
 4. I allowed to change the number of data points to interpolate. Here, `--N=5` is the parameter at program launch, so the total number of interpolated points is N*N=25.
+=======
+4. I changed the number of data points to interpolate. Here, `N=5`, so the total number of interpolated points is N*N=25.
+>>>>>>> fc6d84daf677bda612eba59a0f720be0f89c8a8f
 
 The output are x, y, z coordinates of the interpolated points.
 
