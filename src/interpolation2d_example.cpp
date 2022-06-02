@@ -7,7 +7,7 @@
 #include "include/interpolation2d.h"
 #include "include/griddatainterface.h"
 
-void interpolation2d_example()
+void interpolation2d_example(size_t N_)
 {
     // From:
     // https://www.gnu.org/software/gsl/doc/html/interp.html#c.gsl_interp2d_eval
@@ -16,13 +16,13 @@ void interpolation2d_example()
     // using z values of (0,1,0.5,1) going clockwise around the square.
 
     const gsl_interp2d_type *my_gsl_interp2d_type = gsl_interp2d_bilinear;
-    const size_t N = 5; /* number of points to interpolate */
+    const size_t N = N_; /* number of points to interpolate */
     // const double data_grid_x[] = {0.0, 1.0}; /* define unit square */
     // const double data_grid_y[] = {0.0, 1.0};
 
     const size_t M = 2;
 
-    // Note that I changed the original example from GSL documentation: 
+    // Note that I changed the original example from GSL documentation:
     // Here, the grid point values are 0. and 10. to make it clear that
     // the int numbers 0 and 1 in gsl_spline2d_set() are grid point numbering and not grid point values.
     double *data_grid_x = new double[M]{0.0, 10.0};
@@ -47,7 +47,7 @@ void interpolation2d_example()
 
     /* initialize interpolation */
     gsl_spline2d_init(spline, data_grid_x, data_grid_y, data_grid_z, data_grid_x_size, data_grid_y_size);
-
+    
     /* interpolate N values in x and y and print out grid for plotting */
     for (i = 0; i < N; ++i)
     {
@@ -64,6 +64,16 @@ void interpolation2d_example()
         }
         // printf("\n");
     }
+    // Get derivative
+    // double x, y, dzdx, dzdy;
+    // x=5.;
+    // y=5.;
+    // dzdx = gsl_spline2d_eval_deriv_x(spline, x, y, xacc, yacc);
+    // dzdy = gsl_spline2d_eval_deriv_y(spline, x, y, xacc, yacc);
+    // printf("dz/dx:\n");
+    // printf("%f,%f,%f\n", x, y, dzdx);
+    // printf("dz/dy:\n");
+    // printf("%f,%f,%f\n", x, y, dzdy);
 
     gsl_spline2d_free(spline);
     gsl_interp_accel_free(xacc);

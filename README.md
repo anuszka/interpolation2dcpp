@@ -27,6 +27,8 @@ Get the interpolated z value for (x,y) coordinates:
 
 ## Examples
 
+`interpolation2d_example.cpp` (with `interpolation2d_example.h`) contains examples for 2D bilinear interpolation. 
+
 ### Example usage of my C++ interface
 
     ./interpolation2dcpp.run --example=1 > ./output/out1.csv
@@ -45,11 +47,9 @@ Fig. 1: Output from the Example 1, plotted with gnuplot:
 
 ### Original C example for comparison
 
-`interpolation2d_example.cpp` (with `interpolation2d_example.h`) contains examples for 2D bilinear interpolation. 
-
 Usage:
 
-    ./interpolation2dcpp.run --example=2 > ./output/out2.csv
+    ./interpolation2dcpp.run --example=2 --N=5 > ./output/out2.csv
 
 This runs the original C example from GNU Scientific Library documentation (slightly modified by me), https://www.gnu.org/software/gsl/doc/html/interp.html#c.gsl_interp2d_eval
 
@@ -59,11 +59,11 @@ List of my modifications:
 
         double *data_grid_z = (double *)malloc(data_grid_x_size * data_grid_y_size * sizeof(double));
         
-2. The grid point values are 0. and 10. to make it clear that the `int` numbers 0 and 1 in `gsl_spline2d_set()` are grid point numbering and not grid point values.
+2. The grid point values are 0. and 10. to make it clear that the `int` numbers 0 and 1 in `gsl_spline2d_set()` are grid point numbering and not grid point coordinates.
 
 3. I rescaled the interpolation point positions according to the grid limits (which are here `data_grid_x[1]` and `data_grid_y[1]`).
 
-4. I changed the number of data points to interpolate. Here, `N=5`, so the total numner of interpolated points is N*N=25.
+4. I allowed to change the number of data points to interpolate. Here, `--N=5` is the parameter at program launch, so the total number of interpolated points is N*N=25.
 
 The output are x, y, z coordinates of the interpolated points.
 

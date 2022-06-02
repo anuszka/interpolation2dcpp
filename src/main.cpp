@@ -4,7 +4,9 @@
 int main(int argc, char **argv)
 {
     int example;
+    int N;
     parse_args("example", example, argc, argv);
+    parse_args("N", N, argc, argv);
 
     switch (example)
     {
@@ -12,7 +14,7 @@ int main(int argc, char **argv)
         interpolation2d_class_file_example();
         break;
     case 2:
-        interpolation2d_example();
+        interpolation2d_example((size_t) N);
         break;
 
     default:
