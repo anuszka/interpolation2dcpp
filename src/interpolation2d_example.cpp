@@ -47,7 +47,7 @@ void interpolation2d_example(size_t N_)
 
     /* initialize interpolation */
     gsl_spline2d_init(spline, data_grid_x, data_grid_y, data_grid_z, data_grid_x_size, data_grid_y_size);
-    
+
     /* interpolate N values in x and y and print out grid for plotting */
     for (i = 0; i < N; ++i)
     {
@@ -59,22 +59,13 @@ void interpolation2d_example(size_t N_)
         {
             double yj = data_grid_y[1] * j / (N - 1.0);
             double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
-
-            printf("%f,%f,%f\n", xi, yj, zij); // I format the output for CSV file
+            // Get derivative
+            double dzdx = gsl_spline2d_eval_deriv_x(spline, xi, yj, xacc, yacc);
+            double dzdy = gsl_spline2d_eval_deriv_y(spline, xi, yj, xacc, yacc);
+            printf("%f,%f,%f,%f,%f\n", xi, yj, zij, dzdx, dzdy); // I format the output for CSV file
         }
         // printf("\n");
     }
-    // Get derivative
-    // double x, y, dzdx, dzdy;
-    // x=5.;
-    // y=5.;
-    // dzdx = gsl_spline2d_eval_deriv_x(spline, x, y, xacc, yacc);
-    // dzdy = gsl_spline2d_eval_deriv_y(spline, x, y, xacc, yacc);
-    // printf("dz/dx:\n");
-    // printf("%f,%f,%f\n", x, y, dzdx);
-    // printf("dz/dy:\n");
-    // printf("%f,%f,%f\n", x, y, dzdy);
-
     gsl_spline2d_free(spline);
     gsl_interp_accel_free(xacc);
     gsl_interp_accel_free(yacc);

@@ -65,7 +65,15 @@ List of my modifications:
 
 4. I allowed to choose the number of data points to interpolate. Here, we run the program with parameter `--N=5`, so the total number of interpolated points is N*N=25.
 
-The output are x, y, z coordinates of the interpolated points.
+5. I added the lines
+
+            // Get derivative
+            double dzdx = gsl_spline2d_eval_deriv_x(spline, xi, yj, xacc, yacc);
+            double dzdy = gsl_spline2d_eval_deriv_y(spline, xi, yj, xacc, yacc);
+
+to get the derivatives along x and y axes.
+
+6. I formatted the output as CSV, where the 5 columns are x, y, z coordinates of the interpolated points and derivatives along x and y axes in those points.
 
 ---------
 
