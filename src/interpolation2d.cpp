@@ -111,3 +111,13 @@ double Interpolation2D::getInterpolation(double xi_, double yj_)
 {
     return (gsl_spline2d_eval(spline, xi_, yj_, xacc, yacc));
 }
+
+double Interpolation2D::getInterpolationDerivX(double xi_, double yj_)
+{
+    return (gsl_spline2d_eval_deriv_x(spline, xi_, yj_, xacc, yacc));
+}
+
+double Interpolation2D::getInterpolationDerivY(double xi_, double yj_)
+{
+    return (gsl_spline2d_eval_deriv_y(spline, xi_, yj_, xacc, yacc));
+}

@@ -31,19 +31,19 @@ Get the interpolated z value for (x,y) coordinates:
 
 ### Example usage of my C++ interface
 
-    ./interpolation2dcpp.run --example=1 > ./output/out1.csv
+    ./interpolation2dcpp.run --example=1 --N=13 > ./output/out1.csv
 
-This runs interpolation using my C++ interface for 2D bilinear interpolation with GSL on a set of points between the data stored in a file. 
+This runs interpolation using my C++ interface for 2D bilinear interpolation with GSL, on a set of points between the data stored in a file. 
 
 The program reads data from the file `./input/in.csv`. The file contains a 3x4 grid ("x" and "y" columns) with the "z" column of values. 
 
-The output are x, y, z coordinates of the interpolated points.
+The output are x, y, z coordinates of the interpolated points and derivatives along x and y axes at those points.
 
 <img src="./output/out1.png" alt="out1.csv"/>
 
-Fig. 1: Output from the Example 1, plotted with gnuplot:
+Fig. 1: Output from the Example 1, plotted with Gnuplot:
 
-    set datafile separator ","; set xlabel "x"; set ylabel "y"; set zlabel "z"; splot "./input/in.csv" u 1:2:3 lt 7, "./output/out1.csv" u 1:2:3
+    gnuplot -p plot.gp
 
 ### Original C example for comparison
 
@@ -73,7 +73,7 @@ List of my modifications:
 
 to get the derivatives along x and y axes.
 
-6. I formatted the output as CSV, where the 5 columns are x, y, z coordinates of the interpolated points and derivatives along x and y axes in those points.
+6. I formatted the output as CSV, where the 5 columns are x, y, z coordinates of the interpolated points and derivatives along x and y axes at those points.
 
 ---------
 

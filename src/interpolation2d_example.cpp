@@ -72,7 +72,7 @@ void interpolation2d_example(size_t N_)
     free(data_grid_z);
 }
 
-void interpolation2d_class_file_example()
+void interpolation2d_class_file_example(size_t N_)
 {
     const std::string path = "./input/in.csv";
     const std::string column_name_x = "x";
@@ -83,7 +83,7 @@ void interpolation2d_class_file_example()
     Interpolation2D myinterp;
     myinterp.setData(grid_data);
 
-    const size_t N = 13; /* number of points to interpolate */
+    const size_t N = N_;  /* number of points to interpolate */
 
     double xmax = grid_data.getXgrid().back();
     double ymax = grid_data.getYgrid().back();
@@ -96,8 +96,10 @@ void interpolation2d_class_file_example()
         {
             double yj = ymax * j / (N - 1.0);
             double zij = myinterp.getInterpolation(xi, yj);
-
-            printf("%f,%f,%f\n", xi, yj, zij);
+            // Get derivative
+            double dzdx = myinterp.getInterpolationDerivX(xi, yj);
+            double dzdy = myinterp.getInterpolationDerivY(xi, yj);
+            printf("%f,%f,%f,%f,%f\n", xi, yj, zij, dzdx, dzdy);
         }
     }
 }

@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     switch (example)
     {
     case 1:
-        interpolation2d_class_file_example();
+        interpolation2d_class_file_example((size_t) N);
         break;
     case 2:
         interpolation2d_example((size_t) N);

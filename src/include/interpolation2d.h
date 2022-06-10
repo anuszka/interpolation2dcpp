@@ -46,6 +46,8 @@ public:
     double *getGridY() { return (data_grid_y); }
 
     double getInterpolation(double xi_, double yj_);
+    double getInterpolationDerivX(double xi_, double yj_);
+    double getInterpolationDerivY(double xi_, double yj_);
 };
 
 #endif
