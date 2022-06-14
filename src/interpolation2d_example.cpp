@@ -75,10 +75,8 @@ void interpolation2d_example(size_t N_)
 void interpolation2d_class_file_example(size_t N_)
 {
     const std::string path = "./input/in.csv";
-    const std::string column_name_x = "x";
-    const std::string column_name_y = "y";
-    const std::string column_name_z = "z";
-    GridDataInterface grid_data(path, column_name_x, column_name_y, column_name_z);
+    
+    GridDataInterface grid_data(path);
 
     Interpolation2D myinterp;
     myinterp.setData(grid_data);

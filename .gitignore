@@ -62,5 +62,7 @@ Thumbs.db
 *.mov
 *.wmv
 
+# tests
+src/test/
 src/test/a.out
 src/test/a.out

@@ -1,28 +1,22 @@
 #include <iostream>
 #include "include/griddatainterface.h"
+#include "include/readcsv.h"
 
-GridDataInterface::GridDataInterface(
-    const std::string &pPath,
-    const std::string &pColumnNameX,
-    const std::string &pColumnNameY,
-    const std::string &pColumnNameZ) : path(pPath),
-                                       column_name_x(pColumnNameX),
-                                       column_name_y(pColumnNameY),
-                                       column_name_z(pColumnNameZ)
+GridDataInterface::GridDataInterface(const std::string &pPath) : path(pPath)
 {
     setDoc(path);
     if (fileDataSortingCorrect())
     {
-        setXgrid(column_name_x);
-        setYgrid(column_name_y);
-        setZvalues(column_name_z);
+        setXgrid();
+        setYgrid();
+        setZvalues();
     }
 }
 
-void GridDataInterface::setDoc(const std::string path_)
+void GridDataInterface::setDoc(const std::string &path_)
 {
     // File with 3 columns (x, y, z) and arbitrary column labels
-    doc = new rapidcsv::Document(path_, rapidcsv::LabelParams(0, -1));
+    doc = new Data(path_);
 }
 
 bool GridDataInterface::fileDataSortingCorrect()
@@ -30,10 +24,10 @@ bool GridDataInterface::fileDataSortingCorrect()
     // This function checks only first two lines and columns for now.
     // This is to determine the sorting direction.
 
-    double x0 = doc->GetCell<double>(column_name_x, 0);
-    double x1 = doc->GetCell<double>(column_name_x, 1);
-    double y0 = doc->GetCell<double>(column_name_y, 0);
-    double y1 = doc->GetCell<double>(column_name_y, 1);
+    double x0 = doc->X[0];
+    double x1 = doc->X[1];
+    double y0 = doc->Y[0];
+    double y1 = doc->Y[1];
     if ((x0 == x1) && (y0 < y1))
     {
         file_data_sorting_direction = FileDataSorting::along_y_column_first;
@@ -50,37 +44,37 @@ bool GridDataInterface::fileDataSortingCorrect()
     return (file_data_sorting_correct = true);
 }
 
-void GridDataInterface::setXgrid(const std::string column_name_x_)
+void GridDataInterface::setXgrid()
 {
-    x_grid = collect_nonrepeating_values(doc->GetColumn<double>(column_name_x_));
+    x_grid = collect_nonrepeating_values(doc->X);
     x_grid_size = x_grid.size();
 }
 
-void GridDataInterface::setYgrid(const std::string column_name_y_)
+void GridDataInterface::setYgrid()
 {
-    y_grid = collect_nonrepeating_values(doc->GetColumn<double>(column_name_y_));
+    y_grid = collect_nonrepeating_values(doc->Y);
     y_grid_size = y_grid.size();
 }
 
-void GridDataInterface::setZvalues(const std::string column_name_z_)
+void GridDataInterface::setZvalues()
 {
     double z;
     if (file_data_sorting_direction == FileDataSorting::along_x_column_first)
     {
 
-        for (int i = 0; i < (int) x_grid_size; i++)
-            for (int j = 0; j < (int) y_grid_size; j++)
+        for (int i = 0; i < (int)x_grid_size; i++)
+            for (int j = 0; j < (int)y_grid_size; j++)
             {
-                z = doc->GetCell<double>(column_name_z_, j * x_grid_size + i);
+                z = doc->Z[j * x_grid_size + i];
                 z_values.push_back(z);
             }
     }
     else
     {
-        for (int i = 0; i < (int) x_grid_size; i++)
-            for (int j = 0; j < (int) y_grid_size; j++)
+        for (int i = 0; i < (int)x_grid_size; i++)
+            for (int j = 0; j < (int)y_grid_size; j++)
             {
-                z = doc->GetCell<double>(column_name_z_, i * y_grid_size + j);
+                z = doc->Z[i * y_grid_size + j];
                 z_values.push_back(z);
             }
     }
@@ -102,17 +96,19 @@ std::vector<double> GridDataInterface::collect_nonrepeating_values(std::vector<d
     return (output);
 }
 
-void GridDataInterface::printGridValues(const std::string column_name_)
+void GridDataInterface::printGridValues()
 {
-
     if (file_data_sorting_correct)
     {
-        std::vector<double> grid;
-        grid = (column_name_ == column_name_x) ? getXgrid() : getYgrid();
-        std::cout << column_name_ << " grid values:\n";
-        for (const auto &value : grid)
+        std::cout << "X grid values:\n";
+        for (const auto &value : getXgrid())
             std::cout << value << "\n";
-        std::cout << column_name_ << " grid size: " << grid.size() << "\n";
+        std::cout << "X grid size: " << getXgrid().size() << "\n";
+
+        std::cout << "Y grid values:\n";
+        for (const auto &value : getYgrid())
+            std::cout << value << "\n";
+        std::cout << "Y grid size: " << getYgrid().size() << "\n";
     }
 }
 
