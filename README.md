@@ -19,8 +19,8 @@ Initialize interpolation interface:
 Get the interpolated z value for (x,y) coordinates: 
 
     double x,y,z;
-    x=0.3;
-    y=11.7;
+    x = 0.3;
+    y = 11.7;
     z = myinterp.getInterpolation(x, y);
 
 --------------------
